@@ -79,16 +79,13 @@ public final class Constants {
          * Class holding the talon speeds
          */
         public static abstract class Speeds {
-            public static final double LF_TALON_SPEED = 1.0; // Temp
-            public static final double RF_TALON_SPEED = 1.0; // Temp-
+            public static final double DRIVE_TALON_SPEED = 1.0; // Temp
             public static final double SHOOT_TALON_SHOOT_SPEED = 1.0; // Temp
             public static final double SHOOT_TALON_INTAKE_SPEED = -1.0; // Temp
             public static final double CONVEY_TALON_SHOOT_SPEED = 1.0; // Temp
             public static final double CONVEY_TALON_INTAKE_SPEED = 1.0; // Temp
             public static final double ARM_TALON_SPEED = 1.0; // Temp
-            public static final double LELV_TALON_SPEED = 1.0; // Temp
-            public static final double RELV_TALON_SPEED = 1.0; // Temp
-
+            public static final double ELV_TALON_SPEED = 1.0; // Temp
         }
     
         

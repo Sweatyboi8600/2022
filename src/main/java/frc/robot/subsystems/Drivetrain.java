@@ -43,12 +43,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void set(double leftPower, double rightPower) {
-    LFTalon.set(ControlMode.PercentOutput, leftPower * Constants.Talons.Speeds.LF_TALON_SPEED);
-    RFTalon.set(ControlMode.PercentOutput, rightPower * Constants.Talons.Speeds.RF_TALON_SPEED);
+    LFTalon.set(ControlMode.PercentOutput, leftPower);
+    RFTalon.set(ControlMode.PercentOutput, rightPower);
   }
 
   public void arcadeDrive(double forward, double rotation, double throttle) {
-    set((forward + rotation) * throttle, (forward - rotation) * throttle);
+    set((forward + rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED,
+        (forward - rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED);
   }
 
   public double getLeftDistance() {

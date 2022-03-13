@@ -30,8 +30,8 @@ public class Elevator extends SubsystemBase {
   }
 
   public void set(double speed) {
-    left.set(ControlMode.PercentOutput, speed * Constants.Talons.Speeds.LELV_TALON_SPEED);
-    right.set(ControlMode.PercentOutput, speed * Constants.Talons.Speeds.RELV_TALON_SPEED);
+    left.set(ControlMode.PercentOutput, speed);
+    right.set(ControlMode.PercentOutput, speed);
   }
   
   public double getDistance() {

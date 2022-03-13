@@ -25,7 +25,7 @@ public class ElevateUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_elevator.set(1);
+    m_elevator.set(Constants.Talons.Speeds.ELV_TALON_SPEED);
   }
 
   // Called once the command ends or is interrupted.
