@@ -19,6 +19,13 @@ import edu.wpi.first.wpilibj.util.Color;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    /**
+     * Class holding information pertaining to vision
+     */
+    public static abstract class Vision {
+        public static final int[] RESOLUTION = {1280, 720};
+    }
+
      /**
       * Different color IDs
       */

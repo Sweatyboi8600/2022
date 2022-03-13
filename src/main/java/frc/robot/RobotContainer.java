@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,25 +25,27 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
+  private static final Drivetrain m_drivetrain = new Drivetrain();
 
-  private final Shooter m_shooter = new Shooter();
+  private static final Shooter m_shooter = new Shooter();
 
-  private final Arm m_arm = new Arm();
+  private static final Arm m_arm = new Arm();
 
-  private final Elevator m_elevator = new Elevator();
+  private static final Elevator m_elevator = new Elevator();
 
-  private final ColorSensor m_colorSensor = new ColorSensor();
+  private static final ColorSensor m_colorSensor = new ColorSensor();
 
-  private final Joystick m_driverStick = new Joystick(Constants.Controls.JoystickIDs.DRIVER_ID);
+  private static final Joystick m_driverStick = new Joystick(Constants.Controls.JoystickIDs.DRIVER_ID);
 
-  private final Joystick m_operateStick = new Joystick(Constants.Controls.JoystickIDs.OP_ID);
+  private static final Joystick m_operateStick = new Joystick(Constants.Controls.JoystickIDs.OP_ID);
 
-  private JoystickButton intakeButton, shootButton, elevatorUpButton, elevatorDownButton, armIntakeButton, armShootButton, armUpButton, armMoveButton;
+  private static JoystickButton intakeButton, shootButton, elevatorUpButton, elevatorDownButton, armIntakeButton, armShootButton, armUpButton, armMoveButton;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    UsbCamera cam = CameraServer.startAutomaticCapture();
+    cam.setResolution(Constants.Vision.RESOLUTION[0], Constants.Vision.RESOLUTION[1]);
     m_drivetrain.setDefaultCommand(new Drive(m_drivetrain, 
                                              () -> m_driverStick.getRawAxis(Constants.Controls.AxisIDs.FORWARD_AXIS_ID),
                                              () -> m_driverStick.getRawAxis(Constants.Controls.AxisIDs.ROTATION_AXIS_ID),
