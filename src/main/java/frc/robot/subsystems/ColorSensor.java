@@ -6,11 +6,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
 public class ColorSensor extends SubsystemBase {
@@ -23,17 +23,30 @@ public class ColorSensor extends SubsystemBase {
     m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     m_colorMatch = new ColorMatch();
 
-    m_colorMatch.addColorMatch(Constants.Colors.kBlueTarget);
-    m_colorMatch.addColorMatch(Constants.Colors.kRedTarget);
+    m_colorMatch.addColorMatch(Constants.Colors.BLUE_TARGET);
+    m_colorMatch.addColorMatch(Constants.Colors.RED_TARGET);
+  }
+
+  public ColorMatchResult getColorMatch() {
+    return m_colorMatch.matchClosestColor(m_colorSensor.getColor());
+  }
 
 
+
+  public boolean isAllianceColor() {
+    ColorMatchResult CMR = getColorMatch();
+    return (Constants.Colors.IS_BLUE == (CMR.color == Constants.Colors.BLUE_TARGET) && CMR.confidence > Constants.Colors.CONF_THRESHOLD);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Color c = m_colorMatch.matchClosestColor(m_colorSensor.getColor()).color;
 
-    SmartDashboard.putBoolean("color", c == Constants.Colors.kBlueTarget);
+    // SmartDashboard.putBoolean("color", c == Constants.Colors.kBlueTarget);
+    SmartDashboard.putBoolean("Color", !(isAllianceColor() ^ Constants.Colors.IS_BLUE));
+
+    //       true false
+    // true   t     f
+    // false  f     t
   }
 }

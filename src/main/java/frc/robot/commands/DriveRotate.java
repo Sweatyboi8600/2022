@@ -5,33 +5,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Shooter;
 
-public class autonamus extends CommandBase {
+public class DriveRotate extends CommandBase {
   private final Drivetrain m_drivetrain;
-  private final VisionTracking m_visionTracking;
-  private final Shooter m_shooter;
-  /** Creates a new autonamus. */
-  public autonamus(Drivetrain m_drivetrain, Shooter ) {
+  private double speed;
+  /** Creates a new DriveRotate. */
+  public DriveRotate(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    speed = Constants.Sensors.AUTO_DRIVE_SPEED * m_drivetrain.getLeftDistance() > m_drivetrain.getRightDistance()? 1 : -1;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drivetrain.set(-speed, speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivetrain.set(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(m_drivetrain.getRotation() - 180) < Constants.Sensors.Gyros.THRESHOLD;
   }
 }

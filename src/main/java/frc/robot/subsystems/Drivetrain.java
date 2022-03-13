@@ -7,13 +7,19 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
 
-TalonSRX LFTalon, LBTalon, RFTalon, RBTalon;
+  TalonSRX LFTalon, LBTalon, RFTalon, RBTalon;
+
+  Ultrasonic LUltrasonic, RUltrasonic;
+
+  AnalogGyro gyro;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -29,9 +35,14 @@ TalonSRX LFTalon, LBTalon, RFTalon, RBTalon;
 
     LBTalon.follow(LFTalon);
     RBTalon.follow(RFTalon);
+
+    LUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[1]);
+    RUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[1]);
+
+    gyro = new AnalogGyro(Constants.Sensors.Gyros.Port.port);
   }
 
-  private void set(double leftPower, double rightPower) {
+  public void set(double leftPower, double rightPower) {
     LFTalon.set(ControlMode.PercentOutput, leftPower * Constants.Talons.Speeds.LF_TALON_SPEED);
     RFTalon.set(ControlMode.PercentOutput, rightPower * Constants.Talons.Speeds.RF_TALON_SPEED);
   }
@@ -40,9 +51,29 @@ TalonSRX LFTalon, LBTalon, RFTalon, RBTalon;
     set((forward + rotation) * throttle, (forward - rotation) * throttle);
   }
 
+  public double getLeftDistance() {
+    return LUltrasonic.getRangeInches();
+  }
+
+  public double getRightDistance() {
+    return RUltrasonic.getRangeInches();
+  }
+
+  public double getDistance() {
+    return Math.min(getLeftDistance(), getRightDistance());
+  }
+
+  public double getRotation() {
+    return gyro.getAngle();
+  }
+
+
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Ultransonics", getDistance());
+    SmartDashboard.putNumber("Gyro", getRotation());
   }
 }
