@@ -62,6 +62,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     intakeButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.INTAKE_BUTTON_ID);
+   
     intakeButton.whenHeld(new Intake(m_shooter, 
                                       () -> m_operateStick.getRawAxis(Constants.Controls.AxisIDs.THROTTLE_AXIS_ID)));
     
@@ -71,24 +72,23 @@ public class RobotContainer {
 
     armIntakeButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_INTAKE_BUTTON_ID);
     armIntakeButton.toggleWhenPressed(new ArmToIntake(m_arm));
-
+   
     armShootButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_SHOOT_BUTTON_ID);
     armShootButton.whenPressed(new ArmToShoot(m_arm));
-
+   
     armUpButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_UP_BUTTON_ID);
     armUpButton.toggleWhenPressed(new ArmToUp(m_arm));
 
     armMoveButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_MOVE_BUTTON_ID);
-    armMoveButton.toggleWhenPressed(new ArmMove(m_arm,
+    armMoveButton.whenHeld(new ArmMove(m_arm,
                                         () -> m_operateStick.getRawAxis(Constants.Controls.AxisIDs.FORWARD_AXIS_ID)));
-
+  
     elevatorUpButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ELV_UP_BUTTON_ID);
     elevatorUpButton.whenHeld(new ElevateUp(m_elevator));
-
+    
     elevatorDownButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ELV_DO_BUTTON_ID);
     elevatorDownButton.whenHeld(new ElevateDown(m_elevator));
     
-
   }
 
   /**

@@ -33,26 +33,27 @@ public class Drivetrain extends SubsystemBase {
     RFTalon.setInverted(Constants.Talons.Inversions.RF_TALON_INVERT);
     RBTalon.setInverted(Constants.Talons.Inversions.RB_TALON_INVERT);
 
-    LBTalon.follow(LFTalon);
-    RBTalon.follow(RFTalon);
 
-    LUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[1]);
-    RUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[1]);
+
+    //LUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0]);
+    //RUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0]);
 
     gyro = new AnalogGyro(Constants.Sensors.Gyros.Port.port);
   }
 
   public void set(double leftPower, double rightPower) {
     LFTalon.set(ControlMode.PercentOutput, leftPower);
+    LBTalon.set(ControlMode.PercentOutput, leftPower);
     RFTalon.set(ControlMode.PercentOutput, rightPower);
+    RBTalon.set(ControlMode.PercentOutput, rightPower);
   }
 
   public void arcadeDrive(double forward, double rotation, double throttle) {
-    set((forward + rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED,
-        (forward - rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED);
+    set((forward - rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED,
+        (forward + rotation) * throttle * Constants.Talons.Speeds.DRIVE_TALON_SPEED);
   }
 
-  public double getLeftDistance() {
+  public double getLeftDistance() { 
     return LUltrasonic.getRangeInches();
   }
 
@@ -74,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Ultransonics", getDistance());
+    // SmartDashboard.putNumber("Ultransonics", getDistance());
     SmartDashboard.putNumber("Gyro", getRotation());
   }
 }

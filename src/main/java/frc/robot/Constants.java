@@ -46,16 +46,17 @@ public final class Constants {
          * Class holding talon IDs
          */
         public static abstract class IDs {
-            public static final int LF_TALON_ID = 0; // Temp
-            public static final int LB_TALON_ID = 1; // Temp
-            public static final int RF_TALON_ID = 2; // Temp
-            public static final int RB_TALON_ID = 3; // Temp
-            public static final int LSHOOT_TALON_ID = 4; // Temp
-            public static final int RSHOOT_TALON_ID = 5; // Temp
-            public static final int CONVEY_TALON_ID = 6; // Temp
-            public static final int ARM_TALON_ID = 7; // Temp
-            public static final int LELV_TALON_ID = 8; // Temp
-            public static final int RELV_TALON_ID = 9; // Temp
+            public static final int LF_TALON_ID = 2; 
+            public static final int LB_TALON_ID = 3;
+            public static final int RF_TALON_ID = 8; 
+            public static final int RB_TALON_ID = 9; 
+            public static final int LSHOOT_TALON_ID = 4; 
+            public static final int RSHOOT_TALON_ID = 5; 
+            public static final int CONVEY_TALON_ID = 10;
+            public static final int LARM_TALON_ID = 0;
+            public static final int RARM_TALON_ID = 6;
+            public static final int LELV_TALON_ID = 1; 
+            public static final int RELV_TALON_ID = 7; 
 
         }
 
@@ -69,10 +70,11 @@ public final class Constants {
             public static final boolean RB_TALON_INVERT = false; // Temp
             public static final boolean LSHOOT_TALON_INVERT = true; // Temp
             public static final boolean RSHOOT_TALON_INVERT = false; // Temp
-            public static final boolean CONVEY_TALON_INVERT = true; // Temp
-            public static final boolean ARM_TALON_INVERT = true; // Temp
-            public static final boolean LELV_TALON_INVERT = true; // Temp
-            public static final boolean RELV_TALON_INVERT = false; // Temp
+            public static final boolean CONVEY_TALON_INVERT = false; // Temp
+            public static final boolean LARM_TALON_INVERT = true; // Temp
+            public static final boolean RARM_TALON_INVERT = false; // Temp
+            public static final boolean LELV_TALON_INVERT = false; // Temp
+            public static final boolean RELV_TALON_INVERT = true; // Temp
         }
 
         /**
@@ -81,11 +83,11 @@ public final class Constants {
         public static abstract class Speeds {
             public static final double DRIVE_TALON_SPEED = 1.0; // Temp
             public static final double SHOOT_TALON_SHOOT_SPEED = 1.0; // Temp
-            public static final double SHOOT_TALON_INTAKE_SPEED = -1.0; // Temp
-            public static final double CONVEY_TALON_SHOOT_SPEED = 1.0; // Temp
-            public static final double CONVEY_TALON_INTAKE_SPEED = 1.0; // Temp
-            public static final double ARM_TALON_SPEED = 1.0; // Temp
-            public static final double ELV_TALON_SPEED = 1.0; // Temp
+            public static final double SHOOT_TALON_INTAKE_SPEED = -0.5; // Temp
+            public static final double CONVEY_TALON_SHOOT_SPEED = -0.5; // Temp
+            public static final double CONVEY_TALON_INTAKE_SPEED = 0.5; // Temp
+            public static final double ARM_TALON_SPEED = 0.1; // Temp
+            public static final double ELV_TALON_SPEED = 0.25; // Temp
         }
     
         
@@ -107,8 +109,8 @@ public final class Constants {
          * Class holding the IDs of the axis (mostly for driver)
          */
         public static abstract class AxisIDs {
-            public static final int FORWARD_AXIS_ID = 0;
-            public static final int ROTATION_AXIS_ID = 1;
+            public static final int FORWARD_AXIS_ID = 1;
+            public static final int ROTATION_AXIS_ID = 0;
             public static final int THROTTLE_AXIS_ID = 3;
         }
 
@@ -120,9 +122,9 @@ public final class Constants {
             public static final int INTAKE_BUTTON_ID = 2; 
             public static final int ELV_UP_BUTTON_ID = 8;
             public static final int ELV_DO_BUTTON_ID = 10;
-            public static final int ARM_INTAKE_BUTTON_ID = 7;
+            public static final int ARM_INTAKE_BUTTON_ID = 11;
             public static final int ARM_SHOOT_BUTTON_ID = 9;
-            public static final int ARM_UP_BUTTON_ID = 11;
+            public static final int ARM_UP_BUTTON_ID = 7;
             public static final int ARM_MOVE_BUTTON_ID = 12;
         }
     }
@@ -133,33 +135,21 @@ public final class Constants {
          * Class holding encoder information
          */
         public static abstract class Encoders {
-            /**
-             * Class holding DIO port information
-             */
-            public static abstract class DIOs {
-                public static final int[] ARM_ENCODER_PORT = {0, 1}; // Temp
-                public static final int[] ELV_ENCODER_PORT = {2, 3}; // Temp
-            }
-
-            /**
-             * Class holding distance per pulse
-             */
-            public static abstract class DPRs {
-                public static final double ARM_ENCODERS_DPR = 4./256; // Temp
-                public static final double ELV_ENCODERS_DPR = 4./256; // Temp
-            }
+            public static abstract class Multipliers {
+                public static final double ELV_MULT = -1;//-18/13400;
+            } 
 
             /**
              * Class holding distance limits for encoders
              */
             public static abstract class Distances {
-                public static final double THRESHOLD = 0.5;
-                public static final double ARM_INTAKE_DISTANCE = 0;
+                public static final double THRESHOLD = 100;
+                public static final double ARM_INTAKE_DISTANCE = 2500;
                 public static final double ARM_SHOOT_DISTANCE = 0.5;
-                public static final double ARM_UP_DISTANCE = 1;
+                public static final double ARM_UP_DISTANCE = 500;
 
-                public static final double ELV_DO_DISTANCE = 0;
-                public static final double ELV_UP_DISTANCE = 1;
+                public static final double ELV_DO_DISTANCE = 150;
+                public static final double ELV_UP_DISTANCE = 9850;
             }
         }
         /**

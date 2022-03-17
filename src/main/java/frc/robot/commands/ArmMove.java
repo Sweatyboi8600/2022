@@ -30,11 +30,11 @@ public class ArmMove extends CommandBase {
   @Override
   public void execute() {
     double forward = m_forwardSupplier.getAsDouble();
-    if ((forward > 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE)) ||
-        (forward < 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE))) {
+    if ((forward < 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE)) ||
+        (forward > 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE))) {
       m_arm.set(0);
     } else {
-      m_arm.set(forward);
+      m_arm.set(forward * Constants.Talons.Speeds.ARM_TALON_SPEED * 4);
     }
   }
 

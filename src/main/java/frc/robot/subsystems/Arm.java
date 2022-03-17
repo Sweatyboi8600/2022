@@ -5,33 +5,37 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
-  TalonSRX motor;
-  Encoder encoder;
+  TalonSRX left, right;
+  
 
   /** Creates a new Arm. */
   public Arm() {
-    motor = new TalonSRX(Constants.Talons.IDs.ARM_TALON_ID);
-    motor.setInverted(Constants.Talons.Inversions.ARM_TALON_INVERT);
+    left = new TalonSRX(Constants.Talons.IDs.LARM_TALON_ID);
+    left.setInverted(Constants.Talons.Inversions.LARM_TALON_INVERT);
 
-    encoder = new Encoder(Constants.Sensors.Encoders.DIOs.ARM_ENCODER_PORT[0],
-        Constants.Sensors.Encoders.DIOs.ARM_ENCODER_PORT[1]);
-    encoder.setDistancePerPulse(Constants.Sensors.Encoders.DPRs.ARM_ENCODERS_DPR);
+    right = new TalonSRX(Constants.Talons.IDs.RARM_TALON_ID);
+    right.setInverted(Constants.Talons.Inversions.RARM_TALON_INVERT);
+
+    left.setNeutralMode(NeutralMode.Brake);
+    right.setNeutralMode(NeutralMode.Brake);
   }
 
   public void set(double speed) {
-    motor.set(ControlMode.PercentOutput, speed);
+    left.set(ControlMode.PercentOutput, speed);
+    right.set(ControlMode.PercentOutput, speed);
   }
 
   public double getDistance() {
-    return encoder.getDistance();
+    return left.getSelectedSensorPosition();
   }
 
   public boolean isInThreshold(double target) {
