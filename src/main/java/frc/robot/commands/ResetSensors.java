@@ -5,40 +5,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Elevator;
 
-public class DriveRotate extends CommandBase {
-  private final Drivetrain m_drivetrain;
-  private double speed;
-  /** Creates a new DriveRotate. */
-  public DriveRotate(Drivetrain drivetrain) {
-    m_drivetrain = drivetrain;
+public class ResetSensors extends CommandBase {
+  private final Arm m_arm;
+  private final Elevator m_elevator;
+  /** Creates a new ResetSensors. */
+  public ResetSensors(Arm arm, Elevator elevator) {
+    m_arm = arm;
+    m_elevator = elevator;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_drivetrain);
+    addRequirements(m_arm, m_elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    speed = Constants.Talons.Speeds.AUTO_DRIVE_SPEED * m_drivetrain.getLeftDistance() > m_drivetrain.getRightDistance()? 1 : -1;
+    m_arm.resetEncoder();
+    m_elevator.resetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_drivetrain.set(-speed, speed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_drivetrain.set(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drivetrain.getRotation() - 180) < Constants.Sensors.Gyros.THRESHOLD;
+    return false;
   }
 }

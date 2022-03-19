@@ -35,7 +35,8 @@ public class ColorSensor extends SubsystemBase {
 
   public boolean isAllianceColor() {
     ColorMatchResult CMR = getColorMatch();
-    return (Constants.Colors.IS_BLUE == (CMR.color == Constants.Colors.BLUE_TARGET) && CMR.confidence > Constants.Colors.CONF_THRESHOLD);
+    return (Constants.Colors.IS_BLUE == (CMR.color == Constants.Colors.BLUE_TARGET) &&
+             CMR.confidence > Constants.Colors.CONF_THRESHOLD);
   }
 
   @Override
@@ -43,10 +44,7 @@ public class ColorSensor extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("color", c == Constants.Colors.kBlueTarget);
-    SmartDashboard.putBoolean("Color", !(isAllianceColor() ^ Constants.Colors.IS_BLUE));
-
-    //       true false
-    // true   t     f
-    // false  f     t
+    SmartDashboard.putBoolean("Color", isAllianceColor() == Constants.Colors.IS_BLUE);
+    
   }
 }

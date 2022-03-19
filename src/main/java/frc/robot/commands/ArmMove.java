@@ -29,12 +29,15 @@ public class ArmMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = m_forwardSupplier.getAsDouble();
+    double forward = -m_forwardSupplier.getAsDouble();
+    // forward - -> up
+    // forward + -> down
+    // range from (0, 1)
     if ((forward < 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE)) ||
         (forward > 0 && m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_INTAKE_DISTANCE))) {
       m_arm.set(0);
     } else {
-      m_arm.set(forward * Constants.Talons.Speeds.ARM_TALON_SPEED * 4);
+      m_arm.set(forward * Constants.Talons.Speeds.ARM_TALON_SPEED * 2);
     }
   }
 

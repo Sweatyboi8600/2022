@@ -32,9 +32,13 @@ public class Elevator extends SubsystemBase {
     left.set(ControlMode.PercentOutput, speed);
     right.set(ControlMode.PercentOutput, speed);
   }
+
+  public void resetEncoder() {
+    left.setSelectedSensorPosition(0);
+  }
   
   public double getDistance() {
-    return left.getSelectedSensorPosition() * Constants.Sensors.Encoders.Multipliers.ELV_MULT;
+    return left.getSelectedSensorPosition() / -14000;
   }
 
   // public boolean isInThreshold(double target) {
@@ -44,7 +48,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Elevator Encoder", getDistance());
+    SmartDashboard.putNumber("Elevator Encoder", getDistance() * 100);
   }
 
 }

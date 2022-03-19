@@ -7,8 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,9 +18,14 @@ public class Drivetrain extends SubsystemBase {
 
   TalonSRX LFTalon, LBTalon, RFTalon, RBTalon;
 
-  Ultrasonic LUltrasonic, RUltrasonic;
+  // Ultrasonic LUltrasonic, RUltrasonic;
+  
+  AnalogInput left, right;
 
-  AnalogGyro gyro;
+  // AnalogGyro gyro;
+  ADXRS450_Gyro gyro;
+
+  NetworkTableEntry gyroEntry;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -35,10 +41,15 @@ public class Drivetrain extends SubsystemBase {
 
 
 
-    //LUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.LEFT_PORT[0]);
-    //RUltrasonic = new Ultrasonic(Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0], Constants.Sensors.Ultrasonics.DIOs.RIGHT_PORT[0]);
+    left = new AnalogInput(0);
+    right = new AnalogInput(1);
 
-    gyro = new AnalogGyro(Constants.Sensors.Gyros.Port.port);
+    // gyro = new AnalogGyro(Constants.Sensors.Gyros.Port.port);
+    gyro = new ADXRS450_Gyro();
+    gyro.reset();
+
+    // ShuffleboardTab tab = Shuffleboard.getTab("test");
+    // gyroEntry = tab.addPersistent("asdf", 0).withWidget(BuiltInWidgets.kGyro).getEntry();
   }
 
   public void set(double leftPower, double rightPower) {
@@ -54,11 +65,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftDistance() { 
-    return LUltrasonic.getRangeInches();
+    if (left == null) return 0;
+    return left.getValue();
   }
 
   public double getRightDistance() {
-    return RUltrasonic.getRangeInches();
+    if (right == null) return 0;
+    return right.getValue();
   }
 
   public double getDistance() {
@@ -66,6 +79,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getRotation() {
+    if (gyro == null) return 0;
     return gyro.getAngle();
   }
 
@@ -76,6 +90,9 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber("Ultransonics", getDistance());
-    SmartDashboard.putNumber("Gyro", getRotation());
+    SmartDashboard.putNumber("Ultrasonic Sensor L", getLeftDistance());
+    SmartDashboard.putNumber("Ultrasonic Sensor R", getRightDistance());
+    // SmartDashboard.putNumber("Gyro", getRotation());
+    SmartDashboard.putData("Gyro", gyro);
   }
 }

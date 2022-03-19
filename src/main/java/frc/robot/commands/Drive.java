@@ -25,7 +25,6 @@ public class Drive extends CommandBase {
     m_forwardSupplier = forwardSupplier;
     m_rotationSupplier = rotationSupplier;
     m_throttleSupplier = throttleSupplier;
-
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
@@ -37,6 +36,7 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     double forward = m_forwardSupplier.getAsDouble();
     double rotation = m_rotationSupplier.getAsDouble();
     double throttle = m_throttleSupplier.getAsDouble()/-2 + 0.5;

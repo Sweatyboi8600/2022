@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,8 +33,13 @@ public class Arm extends SubsystemBase {
     right.set(ControlMode.PercentOutput, speed);
   }
 
+  public void resetEncoder() {
+    left.setSelectedSensorPosition(0);
+  }
+
   public double getDistance() {
-    return left.getSelectedSensorPosition();
+    double raw = left.getSelectedSensorPosition();
+    return (4932 - raw) / (274720 - 4932) * -1;
   }
 
   public boolean isInThreshold(double target) {
@@ -45,6 +49,6 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Encoder", getDistance());
-  }
+    SmartDashboard.putNumber("Arm Encoder", getDistance() * 100);
+  }  //4932 -274720
 }

@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -39,13 +38,14 @@ public class RobotContainer {
 
   private static final Joystick m_operateStick = new Joystick(Constants.Controls.JoystickIDs.OP_ID);
 
-  private static JoystickButton intakeButton, shootButton, elevatorUpButton, elevatorDownButton, armIntakeButton, armShootButton, armUpButton, armMoveButton;
+  private static JoystickButton intakeButton, shootButton, elevatorUpButton, elevatorDownButton, armIntakeButton, armShootButton, armUpButton, armMoveButton, encoderResetButton;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    UsbCamera cam = CameraServer.startAutomaticCapture();
-    cam.setResolution(Constants.Vision.RESOLUTION[0], Constants.Vision.RESOLUTION[1]);
+    CameraServer.startAutomaticCapture(0);
+    CameraServer.startAutomaticCapture(1);
+    // cam.setResolution(Constants.Vision.RESOLUTION[0], Constants.Vision.RESOLUTION[1]);
     m_drivetrain.setDefaultCommand(new Drive(m_drivetrain, 
                                              () -> m_driverStick.getRawAxis(Constants.Controls.AxisIDs.FORWARD_AXIS_ID),
                                              () -> m_driverStick.getRawAxis(Constants.Controls.AxisIDs.ROTATION_AXIS_ID),
@@ -71,13 +71,13 @@ public class RobotContainer {
                                     () -> m_operateStick.getRawAxis(Constants.Controls.AxisIDs.THROTTLE_AXIS_ID)));
 
     armIntakeButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_INTAKE_BUTTON_ID);
-    armIntakeButton.toggleWhenPressed(new ArmToIntake(m_arm));
+    armIntakeButton.whenPressed(new ArmToIntake(m_arm));
    
     armShootButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_SHOOT_BUTTON_ID);
     armShootButton.whenPressed(new ArmToShoot(m_arm));
    
     armUpButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_UP_BUTTON_ID);
-    armUpButton.toggleWhenPressed(new ArmToUp(m_arm));
+    armUpButton.whenPressed(new ArmToUp(m_arm));
 
     armMoveButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ARM_MOVE_BUTTON_ID);
     armMoveButton.whenHeld(new ArmMove(m_arm,
@@ -89,6 +89,8 @@ public class RobotContainer {
     elevatorDownButton = new JoystickButton(m_operateStick, Constants.Controls.ButtonIDs.ELV_DO_BUTTON_ID);
     elevatorDownButton.whenHeld(new ElevateDown(m_elevator));
     
+    encoderResetButton = new JoystickButton(m_operateStick, 3);
+    encoderResetButton.whenHeld(new ResetSensors(m_arm, m_elevator));
   }
 
   /**
@@ -111,18 +113,23 @@ public class RobotContainer {
      * 
      * Shoot -done
      */
+    // SequentialCommandGroup auto = new SequentialCommandGroup(
+    //   new ArmToIntake(m_arm),
+    //   new ParallelRaceGroup(
+    //     new DriveForward(m_drivetrain),
+    //     new AutoIntake(m_shooter, m_colorSensor)
+    //   ),
+    //   new DriveRotate(m_drivetrain),
+    //   new ParallelCommandGroup(
+    //     new ArmToShoot(m_arm),
+    //     new DriveForward(m_drivetrain)
+    //   ),
+    //   new AutoShoot(m_shooter, m_colorSensor)
+    // );
     SequentialCommandGroup auto = new SequentialCommandGroup(
-      new ArmToIntake(m_arm),
-      new ParallelRaceGroup(
-        new DriveForward(m_drivetrain),
-        new AutoIntake(m_shooter, m_colorSensor)
-      ),
-      new DriveRotate(m_drivetrain),
-      new ParallelCommandGroup(
-        new ArmToShoot(m_arm),
-        new DriveForward(m_drivetrain)
-      ),
-      new AutoShoot(m_shooter)
+      new ArmToShoot(m_arm), 
+      new AutoShoot(m_shooter, m_colorSensor),
+      new DriveBackward(m_drivetrain)
     );
     return auto;
   }

@@ -32,7 +32,7 @@ public final class Constants {
     public static abstract class Colors {
        
         public static final boolean IS_BLUE = false;
-        public static final double CONF_THRESHOLD = 0.5; // Temp
+        public static final double CONF_THRESHOLD = 0.9; // Temp
         public static final Color BLUE_TARGET = new Color(0.136, 0.412, 0.450);
         public static final Color RED_TARGET = new  Color (0.475, 0.371, 0.153);
         
@@ -81,13 +81,16 @@ public final class Constants {
          * Class holding the talon speeds
          */
         public static abstract class Speeds {
-            public static final double DRIVE_TALON_SPEED = 1.0; // Temp
+            public static final double DRIVE_TALON_SPEED = 0.5; // Temp
+            
+        public static final double AUTO_DRIVE_SPEED = 0.3; // Temp
             public static final double SHOOT_TALON_SHOOT_SPEED = 1.0; // Temp
+            public static final double SHOOT_TALON_AUTO_SPEED = 0.5;
             public static final double SHOOT_TALON_INTAKE_SPEED = -0.5; // Temp
             public static final double CONVEY_TALON_SHOOT_SPEED = -0.5; // Temp
             public static final double CONVEY_TALON_INTAKE_SPEED = 0.5; // Temp
-            public static final double ARM_TALON_SPEED = 0.1; // Temp
-            public static final double ELV_TALON_SPEED = 0.25; // Temp
+            public static final double ARM_TALON_SPEED = 0.2; // Temp
+            public static final double ELV_TALON_SPEED = 0.45; // Temp
         }
     
         
@@ -130,7 +133,6 @@ public final class Constants {
     }
 
     public static abstract class Sensors {
-        public static final double AUTO_DRIVE_SPEED = 1; // Temp
         /**
          * Class holding encoder information
          */
@@ -142,14 +144,18 @@ public final class Constants {
             /**
              * Class holding distance limits for encoders
              */
-            public static abstract class Distances {
-                public static final double THRESHOLD = 100;
-                public static final double ARM_INTAKE_DISTANCE = 2500;
-                public static final double ARM_SHOOT_DISTANCE = 0.5;
-                public static final double ARM_UP_DISTANCE = 500;
 
-                public static final double ELV_DO_DISTANCE = 150;
-                public static final double ELV_UP_DISTANCE = 9850;
+             // 0 is top
+             // 1 is bottom
+            public static abstract class Distances {
+                public static final double THRESHOLD = 0.1;
+                public static final double ARM_INTAKE_DISTANCE = 0.8;
+                public static final double ARM_SHOOT_DISTANCE = 0.24;
+                public static final double ARM_UP_DISTANCE = 0.05;
+                public static final double ARM_SHOOT_THRESHOLD = 0.05;
+
+                public static final double ELV_DO_DISTANCE = 0.075;
+                public static final double ELV_UP_DISTANCE = 1;
             }
         }
         /**
@@ -164,8 +170,9 @@ public final class Constants {
                 public static final int[] RIGHT_PORT = {6, 7}; // Temp
             }
             public static abstract class Distances {
-                public static final double SLOW_DISTANCE = 1; // Temp
-                public static final double MIN_DISTANCE = 0.5; // Temp
+                public static final double SLOW_DISTANCE = 500; // Temp
+                public static final double MIN_DISTANCE = 300; // Temp
+                public static final double BACKWARD_DISTANCE = 1700;
             }
         }
 

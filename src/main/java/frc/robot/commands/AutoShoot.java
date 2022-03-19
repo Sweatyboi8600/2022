@@ -7,17 +7,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Shooter;
 
 public class AutoShoot extends CommandBase {
 
   private final Shooter m_shooter;
+  private final ColorSensor m_colorSensor;
 
   /** Creates a new Intake. */
-  public AutoShoot(Shooter shooter) {
+  public AutoShoot(Shooter shooter, ColorSensor colorSensor) {
     m_shooter = shooter;
+    m_colorSensor = colorSensor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
+    addRequirements(m_shooter, m_colorSensor);
   }
 
   // Called when the command is initially scheduled.
@@ -43,6 +46,6 @@ public class AutoShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_colorSensor.isAllianceColor();
   }
 }
