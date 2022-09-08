@@ -25,7 +25,7 @@ public class DriveBackward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.set(-Constants.Talons.Speeds.AUTO_DRIVE_SPEED, -Constants.Talons.Speeds.AUTO_DRIVE_SPEED);
+    m_drivetrain.set(Constants.Talons.Speeds.AUTO_DRIVE_SPEED, Constants.Talons.Speeds.AUTO_DRIVE_SPEED);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +37,7 @@ public class DriveBackward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //return false;
     return m_drivetrain.getDistance() > Constants.Sensors.Ultrasonics.Distances.BACKWARD_DISTANCE;
   }
 }

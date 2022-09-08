@@ -32,7 +32,7 @@ public class AutoShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setFlyWheels(Constants.Talons.Speeds.SHOOT_TALON_SHOOT_SPEED);
+    m_shooter.setFlyWheels(Constants.Talons.Speeds.AUTO_SHOOT_SPEED);
     m_shooter.setConvey(Constants.Talons.Speeds.CONVEY_TALON_SHOOT_SPEED);
   }
 
@@ -46,6 +46,7 @@ public class AutoShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //return false;
     return !m_colorSensor.isAllianceColor();
   }
 }

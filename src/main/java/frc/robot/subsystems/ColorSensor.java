@@ -9,7 +9,9 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
@@ -17,11 +19,13 @@ public class ColorSensor extends SubsystemBase {
 
   private final ColorSensorV3 m_colorSensor;
   private final ColorMatch m_colorMatch;
-
+  private final boolean isBlue;
   /** Creates a new Color_Sensor. */
   public ColorSensor() {
+    SmartDashboard.putString("Alliance", DriverStation.getAlliance().name());
     m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
     m_colorMatch = new ColorMatch();
+    isBlue = DriverStation.getAlliance().equals(DriverStation.Alliance.Blue); 
 
     m_colorMatch.addColorMatch(Constants.Colors.BLUE_TARGET);
     m_colorMatch.addColorMatch(Constants.Colors.RED_TARGET);
@@ -35,7 +39,7 @@ public class ColorSensor extends SubsystemBase {
 
   public boolean isAllianceColor() {
     ColorMatchResult CMR = getColorMatch();
-    return (Constants.Colors.IS_BLUE == (CMR.color == Constants.Colors.BLUE_TARGET) &&
+    return (isBlue == (CMR.color == Constants.Colors.BLUE_TARGET) &&
              CMR.confidence > Constants.Colors.CONF_THRESHOLD);
   }
 
@@ -44,7 +48,7 @@ public class ColorSensor extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // SmartDashboard.putBoolean("color", c == Constants.Colors.kBlueTarget);
-    SmartDashboard.putBoolean("Color", isAllianceColor() == Constants.Colors.IS_BLUE);
+    SmartDashboard.putBoolean("Color", isAllianceColor() == isBlue);
     
   }
 }

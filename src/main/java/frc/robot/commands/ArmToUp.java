@@ -40,6 +40,9 @@ public class ArmToUp extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("yusef is a genius");
     return m_arm.isInThreshold(Constants.Sensors.Encoders.Distances.ARM_UP_DISTANCE);
-  }
+
+  } 
+  
 }

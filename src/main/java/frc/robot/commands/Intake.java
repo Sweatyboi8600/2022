@@ -32,8 +32,8 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double throttle =  m_throttleSupplier.getAsDouble()/-2 + 0.5;
-    m_shooter.setFlyWheels(Constants.Talons.Speeds.SHOOT_TALON_INTAKE_SPEED * throttle);
+    // double throttle =  m_throttleSupplier.getAsDouble()/-2 + 0.5;
+    m_shooter.setFlyWheels(Constants.Talons.Speeds.SHOOT_TALON_INTAKE_SPEED);
     m_shooter.setConvey(Constants.Talons.Speeds.CONVEY_TALON_INTAKE_SPEED);
   }
 

@@ -75,7 +75,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getDistance() {
-    return Math.min(getLeftDistance(), getRightDistance());
+    return getLeftDistance();
+    // return Math.min(getLeftDistance(), getRightDistance());
   }
 
   public double getRotation() {

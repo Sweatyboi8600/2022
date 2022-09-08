@@ -81,16 +81,16 @@ public final class Constants {
          * Class holding the talon speeds
          */
         public static abstract class Speeds {
-            public static final double DRIVE_TALON_SPEED = 0.5; // Temp
-            
-        public static final double AUTO_DRIVE_SPEED = 0.3; // Temp
+            public static final double DRIVE_TALON_SPEED = 0.75; // Temp
+            public static final double AUTO_DRIVE_SPEED = 0.3; // Temp
+            public static final double AUTO_SHOOT_SPEED = 0.6;
             public static final double SHOOT_TALON_SHOOT_SPEED = 1.0; // Temp
             public static final double SHOOT_TALON_AUTO_SPEED = 0.5;
-            public static final double SHOOT_TALON_INTAKE_SPEED = -0.5; // Temp
+            public static final double SHOOT_TALON_INTAKE_SPEED = -1; // Temp
             public static final double CONVEY_TALON_SHOOT_SPEED = -0.5; // Temp
             public static final double CONVEY_TALON_INTAKE_SPEED = 0.5; // Temp
-            public static final double ARM_TALON_SPEED = 0.2; // Temp
-            public static final double ELV_TALON_SPEED = 0.45; // Temp
+            public static final double ARM_TALON_SPEED = 0.25; // Temp
+            public static final double ELV_TALON_SPEED = 0.6; // Temp
         }
     
         
@@ -148,10 +148,10 @@ public final class Constants {
              // 0 is top
              // 1 is bottom
             public static abstract class Distances {
-                public static final double THRESHOLD = 0.1;
-                public static final double ARM_INTAKE_DISTANCE = 0.8;
+                public static final double THRESHOLD = 0.05;
+                public static final double ARM_INTAKE_DISTANCE = 0.6;
                 public static final double ARM_SHOOT_DISTANCE = 0.24;
-                public static final double ARM_UP_DISTANCE = 0.05;
+                public static final double ARM_UP_DISTANCE = 0.025;
                 public static final double ARM_SHOOT_THRESHOLD = 0.05;
 
                 public static final double ELV_DO_DISTANCE = 0.075;
@@ -172,7 +172,7 @@ public final class Constants {
             public static abstract class Distances {
                 public static final double SLOW_DISTANCE = 500; // Temp
                 public static final double MIN_DISTANCE = 300; // Temp
-                public static final double BACKWARD_DISTANCE = 1700;
+                public static final double BACKWARD_DISTANCE = 1500;
             }
         }
 
